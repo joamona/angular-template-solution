@@ -1,0 +1,17 @@
+services:
+  angular:
+    env_file:
+      - .env
+    build:
+      context: ./node
+      args:
+        - USER_ID=${DJANGOAPI_USER_ID}
+        - GROUP_ID=${DJANGOAPI_GROUP_ID}
+        - USERNAME=${DJANGOAPI_USERNAME}
+    restart: "no"
+    ports:
+      - 127.0.0.1:4200:4200
+    volumes: 
+      - ./src:/home/${USERNAME}
+
+
