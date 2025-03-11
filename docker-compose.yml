@@ -3,15 +3,12 @@ services:
     env_file:
       - .env
     build:
-      context: ./node
-      args:
-        - USER_ID=${DJANGOAPI_USER_ID}
-        - GROUP_ID=${DJANGOAPI_GROUP_ID}
-        - USERNAME=${DJANGOAPI_USERNAME}
+      context: ./web
     restart: "no"
     ports:
       - 127.0.0.1:4200:4200
+    command: ng serve --host 0.0.0.0 --port 4200
     volumes: 
-      - ./src:/home/${USERNAME}
+      - ./web:/usr/src/web
 
 
