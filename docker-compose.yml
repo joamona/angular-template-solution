@@ -2,8 +2,14 @@ services:
   angular:
     env_file:
       - .env
+
+
     build:
       context: ./web
+      args:
+        - USER_ID=${USER_ID}
+        - GROUP_ID=${GROUP_ID}
+        - USERNAME=${USERNAME}
     restart: "no"
     ports:
       - 127.0.0.1:4200:4200
