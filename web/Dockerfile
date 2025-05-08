@@ -8,19 +8,19 @@ ARG GROUP_ID
 ARG USERNAME
 
 # Crear grupo y usuario con los mismos UID y GID que el host
-RUN addgroup -g $GROUP_ID $USERNAME && \
-    adduser -D -u $USER_ID -G $USERNAME $USERNAME
+#RUN addgroup -g $GROUP_ID $USERNAME && \
+#    adduser -D -u $USER_ID -G $USERNAME $USERNAME
 
 WORKDIR /usr/src
 
 RUN npm install -g @angular/cli@18.0.3
 
-USER $USERNAME
+#USER $USERNAME
 COPY . .
 WORKDIR /usr/src/web
 
-USER root
+#USER root
 
 RUN npm install
 
-USER $USERNAME
+#USER $USERNAME
