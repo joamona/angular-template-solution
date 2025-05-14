@@ -28,10 +28,10 @@ export class BuildingComponent {
 
   //Create a form group to eval the data at once
   controlsGroup = new FormGroup({
-    username: this.id,
-    password: this.description,
-    passwordFormControl2: this.area,
-    data_acceptation: this.geom
+    id: this.id,
+    description: this.description,
+    area: this.area,
+    geom: this.geom
   })
 
   constructor(private apiService:ApiService){}
@@ -39,7 +39,7 @@ export class BuildingComponent {
   insert(){
     console.log(this.controlsGroup.valid)
     console.log(this.controlsGroup.value)
-    this.apiService.post('buildings/buildings/insert/',this.controlsGroup.value).subscribe({
+    this.apiService.post('buildings/buildings_view/insert/',this.controlsGroup.value).subscribe({
 
       next: response => {
         console.log('response',response)
@@ -55,7 +55,7 @@ export class BuildingComponent {
       console.log('Put an id');
       return;
     }
-    this.apiService.get('buildings/buildings/select/' + this.id.value + '/').subscribe({
+    this.apiService.get('buildings/buildings_view/selectone/' + this.id.value + '/').subscribe({
 
       next: response => {
         console.log('response',response)
