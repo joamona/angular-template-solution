@@ -3,7 +3,7 @@ import { MapComponent } from './components/map/map.component';
 import { AboutComponent } from './components/about/about.component';
 import { HelpComponent } from './components/help/help.component';
 import { HomeComponent } from './components/home/home.component';
-import { BuildingComponent } from './components/forms/building/building.component';
+import { BuildingFormComponent } from './components/forms/building/building.form.component';
 
 
 
@@ -13,5 +13,5 @@ export const routes: Routes = [
     {path: 'help', component:HelpComponent},
     {path: 'about', component:AboutComponent},
     {path: 'map', component:MapComponent},
-    {path: 'form-building', component:BuildingComponent},
+    {path: 'form-building', component:BuildingFormComponent},
 ];

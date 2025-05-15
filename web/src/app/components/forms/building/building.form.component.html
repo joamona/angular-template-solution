@@ -20,9 +20,17 @@
     </mat-form-field> 
     <!-- -->
     <br>
-    <button  matTooltip="Insert" mat-raised-button [disabled]="!controlsGroup.valid" (click)="insert()">Insert</button>
-    <button  matTooltip="Delete" (click)="insert()">Delete</button>
-    <button  matTooltip="Update" (click)="insert()">Update</button>
-    <button  matTooltip="Select" (click)="select()">Select</button>
+    <button mat-button matTooltip="Insert" mat-raised-button [disabled]="!controlsGroup.valid" (click)="insert()">Insert</button>
+    <button mat-button matTooltip="Delete" (click)="insert()">Delete</button>
+    <button mat-button matTooltip="Update" (click)="insert()">Update</button>
+    <button mat-button matTooltip="Select" (click)="select()">Select</button>
+    <button mat-button matTooltip="Select all" (click)="selectAll()">Select all</button>
+
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>Server answers</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>{{serverMessage}}</mat-card-content>
+      </mat-card>
 </form>
 
