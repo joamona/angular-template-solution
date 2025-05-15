@@ -15,6 +15,7 @@ import {FormControl} from '@angular/forms';
 import {FormGroup, Validators} from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { ServerAnswerModel } from '../../../models/serverAnswer.model';
+import { BuildingModel } from '../../../models/building.model';
 
 @Component({
   selector: 'app-building',
@@ -26,6 +27,7 @@ import { ServerAnswerModel } from '../../../models/serverAnswer.model';
   styleUrl: './building.form.component.scss'
 })
 export class BuildingFormComponent {
+  l: BuildingModel[]=[]
   serverMessage = '';
   //Form component creation
   id = new FormControl('');
@@ -68,7 +70,13 @@ export class BuildingFormComponent {
       next: (response: ServerAnswerModel) => {
         console.log('response',response)
         console.log('response.data',response.data)
-    
+        if (response.ok){
+          var d: BuildingModel = response.data[0] as BuildingModel;
+          this.description.setValue(d.description);
+          this.area.setValue(d.area.toString());
+          this.geom.setValue(d.geom);
+        }
+        this.serverMessage=response.message;
       },
       error:error=>{
         console.log(error.description)
@@ -82,6 +90,7 @@ export class BuildingFormComponent {
 
       next: response => {
         console.log('response',response)
+        this.l = response.data as BuildingModel[];
       },
       error:error=>{
         console.log(error.description)

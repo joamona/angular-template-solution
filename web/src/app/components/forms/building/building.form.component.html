@@ -26,6 +26,12 @@
     <button mat-button matTooltip="Select" (click)="select()">Select</button>
     <button mat-button matTooltip="Select all" (click)="selectAll()">Select all</button>
 
+    <ul>
+        @for (b of l; track b.id){
+            <li>id: {{b.id}}, description: {{b.description}}, area: {{b.area}}, geom: {{b.geom}}</li>
+        }
+    </ul>
+    
     <mat-card appearance="outlined">
         <mat-card-header>
             <mat-card-title>Server answers</mat-card-title>
