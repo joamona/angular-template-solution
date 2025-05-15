@@ -78,7 +78,7 @@ export class BuildingFormComponent {
         }
         this.serverMessage=response.message;
       },
-      error:error=>{
+      error: (error:any)=>{
         console.log(error.description)
       }
     })//subscribe
