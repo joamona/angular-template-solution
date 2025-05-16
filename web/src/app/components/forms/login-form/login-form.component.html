@@ -1,0 +1,31 @@
+<p>Login form</p>
+
+<!--Form start-->
+<form [formGroup]="controlsGroup"> 
+    <mat-form-field>
+        <input matInput placeholder="username" [formControl]="username" name="username" matTooltip="Type your username">
+        <mat-error *ngIf="username.hasError('required')">
+            The username is mandatory.
+        </mat-error>
+        <mat-error *ngIf="username.hasError('minlength')">
+            Type more characteres.
+        </mat-error>
+    </mat-form-field>   
+    <br> 
+    <mat-form-field>
+        <input matInput placeholder="password" [formControl]="password" name="password" matTooltip="Type your password">
+        <mat-error *ngIf="password.hasError('required')">
+            The username is mandatory.
+        </mat-error>
+        <mat-error *ngIf="password.hasError('minlength')">
+            Type more characteres.
+        </mat-error>
+    </mat-form-field>  
+    <br>  
+
+    <!-- -->
+    <br>
+    <button mat-raised-button matTooltip="Login" 
+         [disabled]="!controlsGroup.valid" (click)="login()">Login</button>
+    <p>{{serverMessage}}</p>
+</form>

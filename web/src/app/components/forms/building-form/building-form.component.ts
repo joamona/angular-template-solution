@@ -1,7 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
 
-import {MatButtonModule} from '@angular/material/button';
+import { Component } from '@angular/core';
+
+//To use the template syntax @if, @for, ...
+import { CommonModule } from '@angular/common';
 
 //To use forms 
 //  Import in the imports on the component the following
@@ -9,12 +10,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from "@angular/material/input";//angular material must be installed before
 import { MatTooltip } from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 //To use the controls in the component
+//  Import in the imports on the component the following
 import {FormControl} from '@angular/forms';
 import {FormGroup, Validators} from '@angular/forms';
+
+
 import { ApiService } from '../../../services/api.service';
-import { ServerAnswerModel } from '../../../models/serverAnswer.model';
+import { ServerAnswerModel } from '../../../models/server-answer.model';
 import { BuildingModel } from '../../../models/building.model';
 
 @Component({
@@ -23,8 +28,8 @@ import { BuildingModel } from '../../../models/building.model';
   imports: [CommonModule, MatInputModule, ReactiveFormsModule, MatTooltip, MatButtonModule,
     MatCardModule
   ],
-  templateUrl: './building.form.component.html',
-  styleUrl: './building.form.component.scss'
+  templateUrl: './building-form.component.html',
+  styleUrl: './building-form.component.scss'
 })
 export class BuildingFormComponent {
   l: BuildingModel[]=[]
@@ -43,7 +48,11 @@ export class BuildingFormComponent {
     geom: this.geom
   })
 
+  //Pay attention to::
+  //  - Services must be injected in the constructor
+  //  - Services are not imported in the component, in the imports array
   constructor(private apiService:ApiService){}
+
 
   insert(){
     this.serverMessage='';

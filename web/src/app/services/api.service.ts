@@ -21,7 +21,7 @@ export class ApiService {
     return this.httpClient.get<any>(this.settingsService.API_URL + endPointUrl,
       {
         headers: this.headers, responseType : 'json', reportProgress: false,
-        params: getParams
+        params: getParams,
       })
   }
 
@@ -33,7 +33,12 @@ export class ApiService {
       return this.httpClient.post<any>(
         this.settingsService.API_URL + endPointUrl,
         postData,
-        {headers: this.headers, responseType : 'json', reportProgress: false})
+        { headers: this.headers, 
+          responseType : 'json', 
+          reportProgress: false,
+          withCredentials: true, //withCredentials. Necessary to send cookies: sessionid, csrf, ...
+        }
+      )
   }
 
   private generarHttpParamsDesdeObjeto(data: { [key: string]: string | number }): string {
