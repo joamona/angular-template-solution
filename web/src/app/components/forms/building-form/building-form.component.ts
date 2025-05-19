@@ -59,9 +59,9 @@ export class BuildingFormComponent {
     console.log(this.controlsGroup.valid)
     console.log(this.controlsGroup.value)
     this.apiService.post('buildings/buildings_view/insert/',this.controlsGroup.value).subscribe({
-
-      next: response => {
+      next: (response: ServerAnswerModel) => {
         console.log('response',response)
+        this.selectAll()
       },
       error:error=>{
         console.log(error.description)
@@ -73,6 +73,7 @@ export class BuildingFormComponent {
     console.log(this.controlsGroup.value)
     if (!this.id.value){
       console.log('Put an id');
+      this.serverMessage='Put an id';
       return;
     }
     this.apiService.get('buildings/buildings_view/selectone/' + this.id.value + '/').subscribe({
@@ -81,9 +82,8 @@ export class BuildingFormComponent {
         console.log('response.data',response.data)
         if (response.ok){
           var d: BuildingModel = response.data[0] as BuildingModel;
-          this.description.setValue(d.description);
-          this.area.setValue(d.area.toString());
-          this.geom.setValue(d.geom);
+          this.setDataInForm(d);
+          this.clearList();
         }
         this.serverMessage=response.message;
       },
@@ -100,11 +100,72 @@ export class BuildingFormComponent {
       next: response => {
         console.log('response',response)
         this.l = response.data as BuildingModel[];
+        this.serverMessage=response.message;
       },
       error:error=>{
         console.log(error.description)
       }
     })//subscribe
+  }
+
+  deleteRow(){
+    this.serverMessage='';
+    console.log(this.controlsGroup.value)
+    if (!this.id.value){
+      console.log('Put an id');
+      this.serverMessage='Put an id';
+      return;
+    }
+    this.apiService.post('buildings/buildings_view/delete/' + this.id.value + '/').subscribe({
+      next: (response: ServerAnswerModel) => {
+        console.log('response',response)
+        console.log('response.data',response.data)
+        if (response.ok){
+          this.clearForm();
+          this.selectAll();
+        }
+        this.serverMessage=response.message;
+      },
+      error: (error:any)=>{
+        console.log(error.description)
+      }
+    })//subscribe
+  }
+
+  update(){
+    this.serverMessage='';
+    console.log(this.controlsGroup.value)
+    if (!this.id.value){
+      console.log('Put an id');
+      this.serverMessage='Put an id';
+      return;
+    }
+    this.apiService.post('buildings/buildings_view/update/' + this.id.value + '/', this.controlsGroup.value).subscribe({
+      next: (response: ServerAnswerModel) => {
+        console.log('response',response)
+        console.log('response.data',response.data)
+        if (response.ok){
+          this.selectAll();
+        }
+        this.serverMessage=response.message;
+      },
+      error: (error:any)=>{
+        console.log(error.description)
+      }
+    })//subscribe
+  }
+
+  clearForm(){
+    this.controlsGroup.reset();
+  }
+  clearList(){
+    this.l = [];
+  }
+  setDataInForm(data: BuildingModel){
+    this.id.setValue(data.id.toString());
+    this.description.setValue(data.description);
+    this.area.setValue(data.area.toString());
+    this.geom.setValue(data.geom);
   }
 
 }
