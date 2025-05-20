@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 //To use the template syntax @if, @for, ...
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,8 @@ import {FormGroup, Validators} from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { ServerAnswerModel } from '../../../models/server-answer.model';
 import { BuildingModel } from '../../../models/building.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TileJSON } from 'ol/source';
 
 @Component({
   selector: 'app-building',
@@ -31,7 +33,8 @@ import { BuildingModel } from '../../../models/building.model';
   templateUrl: './building-form.component.html',
   styleUrl: './building-form.component.scss'
 })
-export class BuildingFormComponent {
+export class BuildingFormComponent implements OnInit{
+  geomInUrl = false;
   l: BuildingModel[]=[]
   serverMessage = '';
   //Form component creation
@@ -51,8 +54,19 @@ export class BuildingFormComponent {
   //Pay attention to::
   //  - Services must be injected in the constructor
   //  - Services are not imported in the component, in the imports array
-  constructor(private apiService:ApiService){}
+  constructor(private apiService:ApiService, private activatedRoute: ActivatedRoute, 
+    public router: Router
+  ){}
 
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      var geom = params.get("geom");
+      if (geom){
+        this.geom.setValue(geom);
+        this.geomInUrl=true
+      }
+    });
+  }
 
   insert(){
     this.serverMessage='';
@@ -61,7 +75,7 @@ export class BuildingFormComponent {
     this.apiService.post('buildings/buildings_view/insert/',this.controlsGroup.value).subscribe({
       next: (response: ServerAnswerModel) => {
         console.log('response',response)
-        this.selectAll()
+        this.selectAll();
       },
       error:error=>{
         console.log(error.description)
@@ -166,6 +180,11 @@ export class BuildingFormComponent {
     this.description.setValue(data.description);
     this.area.setValue(data.area.toString());
     this.geom.setValue(data.geom);
+  }
+  useGeomInUrl(){
+      this.activatedRoute.queryParamMap.subscribe(params => {
+        this.geom.setValue(params.get("geom"));
+    });
   }
 
 }
