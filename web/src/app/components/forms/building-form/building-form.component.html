@@ -1,4 +1,6 @@
-<p>Buildings form</p>
+<div class="flexbox-exterior-container">
+<div class="flexbox-responsive-interior-container-500px">
+<h6 class="text-align-center">Buildings form</h6>
 
 <!--Form start-->
 <form [formGroup]="controlsGroup"> 
@@ -35,12 +37,10 @@
             <li (click)="setDataInForm(b)">id: {{b.id}}, description: {{b.description}}, area: {{b.area}}, geom: {{b.geom}}</li>
         }
     </ul>
-
-    <mat-card appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>Server answers</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>{{serverMessage}}</mat-card-content>
-      </mat-card>
+    <br>
+    <p>{{serverMessage}}</p>
 </form>
 
+
+</div>
+</div>
