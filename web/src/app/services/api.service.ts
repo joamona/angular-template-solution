@@ -20,8 +20,11 @@ export class ApiService {
   get(endPointUrl:string, getParams:HttpParams=new HttpParams({})){
     return this.httpClient.get<any>(this.settingsService.API_URL + endPointUrl,
       {
-        headers: this.headers, responseType : 'json', reportProgress: false,
+        headers: this.headers, 
+        responseType : 'json', 
+        reportProgress: false,
         params: getParams,
+        withCredentials: true, //withCredentials. Necessary to send cookies: sessionid, csrf, ...
       })
   }
 
