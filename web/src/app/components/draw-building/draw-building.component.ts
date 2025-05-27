@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MapService } from '../../services/map.service';
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   templateUrl: './draw-building.component.html',
   styleUrl: './draw-building.component.scss'
 })
-export class DrawBuildingComponent implements AfterViewInit {
+export class DrawBuildingComponent implements AfterViewInit, OnDestroy{
   drawMode: boolean = false;
   drawBuilding: Draw | undefined;
 
@@ -93,5 +93,13 @@ export class DrawBuildingComponent implements AfterViewInit {
     console.log(wktRepresentation);//logs a message
     this.router.navigate(['/building-form'], { queryParams: {geom: wktRepresentation }});
 
+  }
+  
+  ngOnDestroy(): void {
+    // Remove the draw interaction when the component is destroyed
+    if (this.drawBuilding) {
+      this.mapService.map?.removeInteraction(this.drawBuilding);
+      console.log("Draw interaction removed");
+    }
   }
 }
