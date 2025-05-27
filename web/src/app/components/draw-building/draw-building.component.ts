@@ -44,6 +44,7 @@ export class DrawBuildingComponent implements AfterViewInit, OnDestroy{
     }
   }
   addDrawBuildingInteraction() {
+    //Add the draw interaction when the component is initialized
     var sourceBuildings: VectorSource = this.mapService.getLayerByTitle('Buildings vector')?.getSource();
     if(sourceBuildings){
 	    this.drawBuilding = new Draw({
@@ -94,7 +95,7 @@ export class DrawBuildingComponent implements AfterViewInit, OnDestroy{
     this.router.navigate(['/building-form'], { queryParams: {geom: wktRepresentation }});
 
   }
-  
+
   ngOnDestroy(): void {
     // Remove the draw interaction when the component is destroyed
     if (this.drawBuilding) {
