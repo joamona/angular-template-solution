@@ -5,12 +5,12 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ElementRef} fro
 //My imports
 import { MapService } from '../../services/map.service';
 import { DrawBuildingComponent } from '../draw-building/draw-building.component';
-
+import { DrawFlowerComponent } from '../draw-flower/draw-flower.component';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [DrawBuildingComponent],
+  imports: [DrawBuildingComponent, DrawFlowerComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss'
 })
@@ -50,6 +50,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy{
       // en un elemento inexistente,
       // lo que puede causar errores o pérdidas de memoria.
       this.mapService.map.setTarget(undefined);
+
       console.log('Mapa desvinculado del DOM antes de destruir el componente');
     }
   }

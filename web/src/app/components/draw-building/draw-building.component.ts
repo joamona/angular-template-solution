@@ -8,6 +8,8 @@ import { DrawEvent } from 'ol/interaction/Draw';
 import {WKT} from 'ol/format';
 import VectorSource from 'ol/source/Vector';
 import { Router } from '@angular/router';
+import { EventService } from '../../services/event.service';
+import { EventModel } from '../../models/event.model';
 
 @Component({
   selector: 'app-draw-building',
@@ -20,8 +22,17 @@ export class DrawBuildingComponent implements AfterViewInit, OnDestroy{
   drawMode: boolean = false;
   drawBuilding: Draw | undefined;
 
-  constructor(public mapService: MapService, public router: Router) {
+  constructor(public mapService: MapService, public router: Router, public eventService: EventService) {
+    // Subscribe to events if needed
+    this.eventService.eventActivated$.subscribe((event: EventModel) => {
+      console.log("Event received in DrawBuildingComponent:", event.type);
+      if (event.type != 'drawBuildingActivated') {
+        this.drawMode = false; // Reset draw mode if a different event is received
+      }
+      // Handle the event as needed
+    });
   }
+
   ngAfterViewInit(): void {
     console.log("DrawBuildingComponent initialized");
     this.addDrawBuildingInteraction();
@@ -62,7 +73,9 @@ export class DrawBuildingComponent implements AfterViewInit, OnDestroy{
 
   //Enables the polygons draw
   enableDrawBuildings(){
+    this.mapService.disableMapInteractions(); // Disable other interactions
     this.drawBuilding!.setActive(true);
+    this.eventService.emitEvent(new EventModel('drawBuildingActivated', {}));
   }
 
   //Disables the polygons draw

@@ -11,6 +11,9 @@ import { Projection } from 'ol/proj';
 import LayerGroup from 'ol/layer/Group';
 import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
+import Interaction from 'ol/interaction/Interaction'; // Importa la clase Interaction
+import MouseWheelZoom from 'ol/interaction/MouseWheelZoom'; // Importa MouseWheelZoom
+import DragPan from 'ol/interaction/DragPan';             // Importa DragPan
 
 //vector layers
 import { Vector as VectorLayer} from 'ol/layer';
@@ -199,5 +202,16 @@ export class MapService {
   // Helper para verificar si un BaseLayer es un LayerGroup (y tiene .getLayers())
   private isLayerGroup(layer: BaseLayer): layer is LayerGroup {
     return (layer as LayerGroup).getLayers !== undefined;
+  }
+
+  disableMapInteractions(): void {
+    if (this.map) {
+      this.map.getInteractions().forEach((interaction: Interaction) => {
+        // Comprueba si la interacción NO es una instancia de MouseWheelZoom o DragPan
+        if (!(interaction instanceof MouseWheelZoom) && !(interaction instanceof DragPan)) {
+          interaction.setActive(false);
+        }
+      });
+    }
   }
 }
